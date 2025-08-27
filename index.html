@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Code générateur</title>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-96 text-center">
+    <h1 class="text-2xl font-bold mb-4">QR Code générateur</h1>
+
+    <input id="urlInput" 
+           type="text" 
+           placeholder="Entrez une URL..." 
+           class="w-full border border-gray-300 p-2 rounded-lg mb-4">
+
+    <button onclick="generateQR()" 
+            class="w-full bg-black text-white p-2 rounded-lg hover:bg-gray-800">
+      Générer
+    </button>
+
+    <div id="qrcode" class="flex justify-center mt-6"></div>
+  </div>
+
+  <footer class="mt-6 text-gray-500 text-sm text-center">
+    © <span id="year"></span> — by Adrien Crd
+  </footer>
+
+  <script>
+    let qrCode;
+    function createPixelSmiley(size = 32) {
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext("2d");
+
+      // fond jaune
+      ctx.fillStyle = "#FFD83D";
+      ctx.fillRect(0, 0, size, size);
+
+      // yeux (noirs)
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(size * 0.25, size * 0.3, size * 0.1, size * 0.1);
+      ctx.fillRect(size * 0.65, size * 0.3, size * 0.1, size * 0.1);
+
+      // bouche (pixels noirs)
+      ctx.fillRect(size * 0.25, size * 0.65, size * 0.5, size * 0.1);
+
+      return canvas.toDataURL("image/png");
+    }
+
+    function generateQR() {
+      const url = document.getElementById("urlInput").value.trim();
+      if (!url) {
+        alert("Veuillez entrer une URL valide !");
+        return;
+      }
+
+      const pixelSmiley = createPixelSmiley(32);
+
+      document.getElementById("qrcode").innerHTML = "";
+
+      qrCode = new QRCodeStyling({
+        width: 250,
+        height: 250,
+        type: "canvas",
+        data: url,
+        image: pixelSmiley,
+        dotsOptions: {
+          color: "#000000",
+          type: "square"
+        },
+        backgroundOptions: {
+          color: "#ffffff"
+        },
+        imageOptions: {
+          crossOrigin: "anonymous",
+          margin: 10
+        }
+      });
+
+      qrCode.append(document.getElementById("qrcode"));
+    }
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
