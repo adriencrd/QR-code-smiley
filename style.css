@@ -1,38 +1,62 @@
+/* Supprime tout débordement horizontal */
 html, body {
   max-width: 100%;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
+/* Bloc principal */
 div.bg-white {
-  width: 100%;
-  max-width: 400px;   
+  width: 100%;            /* occupe toute la largeur possible */
+  max-width: 500px;       /* un peu plus large sur desktop */
   box-sizing: border-box;
-  margin: 0 auto;    
+  margin: 0 auto;
+  padding: 2rem;          /* espace intérieur plus généreux */
+  transform: scale(1.1);  /* agrandit légèrement le bloc */
+  transform-origin: center;
 }
 
-input#urlInput,button {
+/* Input + bouton bien fluides */
+input#urlInput,
+button {
   width: 100%;
   box-sizing: border-box;
+  font-size: 1.1rem;       /* texte plus grand */
+  padding: 0.8rem;
 }
 
+/* QR code s’adapte */
 #qrcode canvas {
   max-width: 100%;
   height: auto !important;
   display: block;
 }
 
+/* Footer */
 footer {
   width: 100%;
   padding: 10px;
   text-align: center;
+  font-size: 0.9rem;
 }
 
+/* Version mobile */
 @media (max-width: 480px) {
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;     /* titre plus gros */
   }
 
   div.bg-white {
-    padding: 1.5rem;   
+    width: 95%;           /* prend presque tout l’écran */
+    max-width: none;
+    padding: 2rem;
+    transform: none;      /* pas de scale sur mobile, largeur suffit */
+  }
+
+  input#urlInput,
+  button {
+    font-size: 1rem;
+    padding: 0.9rem;
   }
 }
